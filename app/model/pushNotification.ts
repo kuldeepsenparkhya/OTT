@@ -4,7 +4,6 @@ import mongoose, { Document, Schema } from 'mongoose';
 interface SubscriptionInterface extends Document {
     movies: string[];
     userID: string[];
-    createdAt: Date;
 }
 
 // Define schema for Subscription
@@ -17,11 +16,10 @@ const SubscriptionSchema: Schema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     }],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+},
+    {
+        timestamps: true
+    })
 
 // Define and export the Subscription model
 const Subscription = mongoose.model<SubscriptionInterface>('Subscription', SubscriptionSchema);

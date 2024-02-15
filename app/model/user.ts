@@ -6,7 +6,6 @@ interface UserInterface extends Document {
     name: string;
     email: string;
     password: string;
-    createdAt: Date;
     matchPassword: (password: string) => Promise<boolean>;
 }
 
@@ -34,11 +33,11 @@ const UserSchema: Schema = new Schema({
         default: 'admin'
 
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+},
+    {
+        timestamps: true
+    })
+
 
 // Define pre-save middleware for hashing password
 UserSchema.pre<UserInterface>('save', async function (next) {

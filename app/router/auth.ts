@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 const router = express.Router();
 
-import { forgotPassword, login, me } from '../controller';
+import { forgotPassword, login, me } from '../controller/auth';
 
 
 

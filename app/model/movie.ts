@@ -1,51 +1,76 @@
-import { string } from 'joi';
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 
-// Define interface for User document
+// Define interface for Video sub-document
+interface VideoInterface {
+    size: number;
+    filename: string;
+    mimetype: string;
+    originalname: string;
+    videoUrl: string;
+}
+
+// Define interface for Movie document
 interface MovieInterface extends Document {
     title: string;
     description: string;
-    genres: string[];
-    bannerImage: string;
-    languageType: string;
-    createdAt: Date;
+    video: VideoInterface[];
+    genres: Types.ObjectId[];
+    categories: Types.ObjectId[];
+    tags: Types.ObjectId[];
+    type: string,
+    languageType: 'hindi' | 'english' | 'telugu' | 'punjabi';
     releaseDate: Date;
 }
 
 // Define schema for Movie
-const MovieSchema: Schema = new Schema({
-    title: {
-        type: String,
-        required: true
+const MovieSchema: Schema = new Schema(
+    {
+        title: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
+        },
+        video: [{
+            size: { type: Number, },
+            filename: { type: String, },
+            mimetype: { type: String, },
+            originalname: { type: String, },
+            videoUrl: { type: String, }
+        }],
+        genres: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Genre'
+        }],
+        categories: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }],
+        tags: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Tag'
+        }],
+        type: {
+            type: String,
+            enum: ['Thriller', 'Science Fiction', 'Romance', 'Mystery', 'Musical', 'Horror', 'Fantasy', 'Drama', 'Documentary', 'Comedy', 'Action', 'Western'],
+            required: true
+        },
+        languageType: {
+            type: String,
+            enum: ['hindi', 'english', 'telugu', 'punjabi'],
+            required: true
+        },
+        releaseDate: {
+            type: Date,
+            required: true
+        },
     },
-    description: {
-        type: String,
-        required: true
-    },
-    bannerImage: {
-        type: String
-    },
-    video: {
-        type: String
-    },
-    genres: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Genre'
-    }],
-    languageType: {
-        type: String,
-        enum: ['hindi', 'english', 'telgu', 'punjabi'],
-        required: true
-    },
-    releaseDate: {
-        type: Date,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    {
+        timestamps: true
     }
-});
+);
 
 // Define and export the Movie model
 const Movie = mongoose.model<MovieInterface>('Movie', MovieSchema);

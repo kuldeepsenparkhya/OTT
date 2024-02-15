@@ -4,7 +4,6 @@ import mongoose, { Document, Schema } from 'mongoose';
 interface WatchListInterface extends Document {
     movies: string[];
     userID: string[];
-    createdAt: Date;
 }
 
 // Define schema for WatchList
@@ -17,11 +16,11 @@ const WatchListSchema: Schema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     }],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+},
+    {
+        timestamps: true
+    })
+
 
 // Define and export the WatchList model
 const WatchList = mongoose.model<WatchListInterface>('WatchList', WatchListSchema);

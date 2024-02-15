@@ -7,7 +7,6 @@ interface SubscriptionInterface extends Document {
     price: number;
     duration: number; // Duration of the plan in days
     features: string[];
-    createdAt: Date;
 }
 
 // Define schema for Subscription
@@ -32,11 +31,11 @@ const SubscriptionSchema: Schema = new Schema({
         type: String,
         required: true
     }],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+},
+    {
+        timestamps: true
+    })
+
 
 // Define and export the Subscription model
 const SubscriptionPlan = mongoose.model<SubscriptionInterface>('SubscriptionPlan', SubscriptionSchema);

@@ -6,7 +6,7 @@ export const handleError = (error: any, status: any, res: Response) => {
     return res.status(status).send({
         message: error,
         error: true,
-    })
+    }) 
 
 }
 

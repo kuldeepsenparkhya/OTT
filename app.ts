@@ -3,9 +3,16 @@ import "dotenv/config";
 import bodyParser from 'body-parser';
 
 
+import { authorization } from './app/middleware/middleware';
+
 import user from './app/router/user';
 import auth from './app/router/auth';
-import { authorization } from './app/middleware/middleware';
+import genre from './app/router/genre';
+import category from './app/router/category';
+import movie from './app/router/movie';
+import media from './app/router/media';
+import movieBanner from './app/router/movieBanner';
+import tag from './app/router/tag';
 
 const app = express();
 
@@ -18,7 +25,15 @@ app.use(authorization)
 
 // Routes
 user(app);
-auth(app)
+auth(app);
+genre(app);
+category(app);
+movie(app);
+movieBanner(app);
+media(app);
+tag(app)
+
+
 
 
 
